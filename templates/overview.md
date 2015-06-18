@@ -18,15 +18,15 @@ expected type when accessed for the first time.
   - Class names
   - Callables that produce an expected type
 
-  - `Value::TYPE_CLOSURE
-  - `Value::TYPE_CALLABLE
-  - `Value::TYPE_BOOLEAN
-  - `Value::TYPE_INTEGER
-  - `Value::TYPE_FLOAT
-  - `Value::TYPE_STRING
-  - `Value::TYPE_ARRAY
-  - `Value::TYPE_RESOURCE
-  - `Value::TYPE_OBJECT
+  - `Value::TYPE_CLOSURE`
+  - `Value::TYPE_CALLABLE`
+  - `Value::TYPE_BOOLEAN`
+  - `Value::TYPE_INTEGER`
+  - `Value::TYPE_FLOAT`
+  - `Value::TYPE_STRING`
+  - `Value::TYPE_ARRAY`
+  - `Value::TYPE_RESOURCE`
+  - `Value::TYPE_OBJECT`
 
 ## Mutiple types
 
