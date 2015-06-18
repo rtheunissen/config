@@ -1,6 +1,6 @@
-title: "rtheunissen/di"
-tagline: "Injected dependency containers"
-github: "rtheunissen/di"
+title: "rtheunissen/config"
+tagline: "Configuration containers"
+github: "rtheunissen/config"
 author: "rudi_theunissen"
-packagist: "rtheunissen/di"
+packagist: "rtheunissen/config"
 google_analytics_tracking_id:

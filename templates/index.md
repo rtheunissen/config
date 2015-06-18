@@ -14,73 +14,18 @@ Introduction
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/{{ site.data.project.github }}.svg)](https://scrutinizer-ci.com/g/{{ site.data.project.github }})
 [![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/{{ site.data.project.github }}.svg)](https://scrutinizer-ci.com/g/{{ site.data.project.github }})
 
-This library provides *containers for injected dependencies*, which is different to standard
-dependency injection where containers inject the dependecies and the object is not aware of how it was instantiated. This library *does not* challenge these patterns, and is not an attempt to replace them.
+This library provides a flexible way to manage array-based configuration.
+It makes it easy to specify expected value types and optional defaults. A container
+is constructed using provided values, merged with any defined defaults, then
+evaluates those values against their expected types as they are access for the first time.
 
-Containers have expected types and optional defaults, and are constructed with a set of
-dependency values which can be accessed on the container.
+## Features
 
-## What problem does this library try to solve?
-
-This library aims to solve the problem where having many constructor parameters becomes hard to manage.
-It provides a convenient way to handle parameter values and their defaults. In most cases, the alternative
-is to do many manual `isset` and `is_a` checks, which these containers take care of for you.
+- Multiple types
+- Lazy evaluation
+- Nested configuration
 
 ## Use cases
 
-### Type hinted parameters
-
-We have a class that has two dependencies, both with default values.
-We have to explicitly pass `null` as the first parameter to preserve its default
-value when we set the second parameter to something else.
-
-What's nice here is that it's pure - no libraries or any hard dependencies. Type validation
-is handled by type hinting and it's easy enough to check parameter order in the documentation.
-
-{% highlight php startinline=true %}
-
-class Instance
-{
-    public function construct(CacheProvider $cache = null, StorageProvider $storage = null)
-    {
-        $this->cache = $cache ?: new Cache\Provider\MemoryCache();
-        $this->storage = $storage ?: new Storage\Provider\SessionStorage();
-    }
-}
-
-$instance = new Instance(null, new FileStorage());
-
-{% endhighlight %}
-
-### 'Options' style, single array parameter
-
-There are many libraries that use an options-style, single array parameter constructor.
-This is common when there are many parameters or where parameter to argument matching becomes difficult.
-
-{% highlight php startinline=true %}
-
-class Instance
-{
-    public function construct(array $options = [])
-    {
-        $defaults = [
-            "cache"   => new Cache\Provider\MemoryCache(),
-            "storage" => new Storage\Provider\SessionStorage(),
-        ];
-
-        $options = array_merge($defaults, $options);
-
-        $this->cache   = $options['cache'];
-        $this->storage = $options['storage'];
-    }
-}
-
-$instance = new Instance([
-    "storage" => new FileStorage(),
-]);
-
-{% endhighlight %}
-
-An obvious problem here is that we may be creating more instances than we need to,
-because we are directly instantiating all the default values. We would also need to
-check that the value provided for the key matches the expected type.
+When you want to use a potentially nested array-based structure for configration with flexible types,
+default values, lazy evaluation, and type validation.

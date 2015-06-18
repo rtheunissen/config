@@ -1,10 +1,6 @@
 Getting Started:
     Introduction: '/'
-    Basic usage: '/basic-usage/'
     Installation: '/installation/'
+    Basic usage: '/basic-usage/'
 Containers:
-    Overview:           '/container-overview/'
-    Implicit container: '/implicit-container/'
-    Explicit container: '/explicit-container/'
-Factory:
-    Container factory: '/container-factory/'
+    Overview: '/overview/'
