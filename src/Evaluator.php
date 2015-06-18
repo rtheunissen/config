@@ -91,32 +91,27 @@ class Evaluator
      *
      * @param string $value The value to evaluate.
      * @param string $type The expected type of the evaluated value.
-     * @param array  $types Acceptable value types.
      *
      * @return mixed|null The evaluated value or null if failed to evaluate.
      */
-    private static function evaluateUnmatchedString($value, $type, $types)
+    private static function evaluateUnmatchedString($value, $type)
     {
-        switch ($type) {
+        if ($type === Value::TYPE_BOOLEAN) {
 
-            case Value::TYPE_BOOLEAN:
+            // This is better than a boolean cast, as (bool)"false" is true.
+            return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+        }
 
-                // This is better than a boolean cast, as (bool)"false" is true.
-                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+        // Check if numeric first otherwise anything evaluates to 0.
+        if (is_numeric($value)) {
 
-            case Value::TYPE_INTEGER:
+            if ($type === Value::TYPE_INTEGER) {
+                return intval($value);
+            }
 
-                // Check if numeric first otherwise anything evaluates to 0.
-                if (is_numeric($value)) {
-                    return intval($value);
-                }
-
-            case Value::TYPE_FLOAT:
-
-                // Check if numeric first otherwise anything evaluates to 0.0
-                if (is_numeric($value)) {
-                    return floatval($value);
-                }
+            if ($type === Value::TYPE_FLOAT) {
+                return floatval($value);
+            }
         }
     }
 
@@ -126,11 +121,10 @@ class Evaluator
      *
      * @param string $value The value to evaluate.
      * @param string $type The expected type of the evaluated value.
-     * @param array  $types Acceptable value types.
      *
      * @return mixed|null The evaluated value or null if failed to evaluate.
      */
-    private static function evaluateInteger($value, $type, $types)
+    private static function evaluateInteger($value, $type)
     {
         switch ($type) {
             case Value::TYPE_BOOLEAN:
@@ -148,11 +142,10 @@ class Evaluator
      *
      * @param string $value The value to evaluate.
      * @param string $type The expected type of the evaluated value.
-     * @param array  $types Acceptable value types.
      *
      * @return mixed|null The evaluated value or null if failed to evaluate.
      */
-    private static function evaluateDouble($value, $type, $types)
+    private static function evaluateDouble($value, $type)
     {
         switch ($type) {
             case Value::TYPE_BOOLEAN:

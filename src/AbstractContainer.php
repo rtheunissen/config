@@ -3,11 +3,6 @@
 namespace Concat\Config\Container;
 
 use Concat\Config\Container\Value;
-
-use Concat\Config\Container\Exception\DependencyNotFoundException;
-use Concat\Config\Container\Exception\TypeNotDefinedException;
-use Concat\Config\Container\Exception\DependencyEvaluationException;
-
 use InvalidArgumentException;
 
 /**
@@ -102,7 +97,7 @@ abstract class AbstractContainer
      * key path.
      *
      * @param array $haystack
-     * @param array $levels
+     * @param array $path
      *
      * @return mixed
      *
