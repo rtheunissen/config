@@ -1,5 +1,5 @@
 {
-    "name": "rtheunissen/di",
+    "name": "rtheunissen/config",
     "description": "Provides a convenient way to create array-based configuration structures",
     "keywords": ["array", "options", "config"],
     "license": "MIT",
