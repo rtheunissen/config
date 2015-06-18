@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {% if page.url == '/' %}
+            <title>{{ site.data.project.title }} - {{ site.data.project.tagline }}</title>
+        {% else %}
+            <title>{{ page.title }} - {{ site.data.project.title }}</title>
+        {% endif %}
+        {% if site.data.project.description %}
+            <meta name="description" content="{{ site.data.project.description }}">
+        {% endif %}
+        <link rel="stylesheet" href="https://rawgit.com/rtheunissen/gh-pages-themes/master/default/build/theme.css">
+    </head>
+    <body>
+
+        <header>
+
+            <label for="menu">&#9776;</label>
+            <a class="title" href="{{ site.baseurl }}">
+                <span class="name">{{ site.data.project.title }}</span>
+                <span class="tagline">{{ site.data.project.tagline }}</span>
+            </a>
+            <a class="github" href="https://github.com/{{ site.data.project.github }}">
+                <img src="https://cdn.rawgit.com/rtheunissen/gh-pages-themes/master/default/assets/images/github.png">
+            </a>
+        </header>
+
+        <input type="checkbox" id="menu">
+        <main>
+            <menu>
+                {% for section in site.data.menu %}
+                    <h2>{{ section[0] }}</h2>
+                    <ul>
+                        {% for link in section[1] %}
+                            <li {% if page.url == link[1] %}class="selected"{% endif %}>
+                                <a href="{{ site.baseurl }}{{ link[1] }}">{{ link[0] }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </menu>
+            <article>
+                {{ content }}
+            </article>
+        </main>
+    </body>
+</html>
