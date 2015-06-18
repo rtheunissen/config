@@ -1,6 +1,6 @@
 ---
 layout: default
-permalink: /container-overview/
+permalink: /overview/
 title: Container overview
 ---
 
