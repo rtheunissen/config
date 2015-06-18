@@ -82,7 +82,7 @@ class Evaluator
             return self::evaluateObject(new $value, $type, $types);
         }
 
-        return self::evaluateUnmatchedString($value, $type, $types);
+        return self::evaluateUnmatchedString($value, $type);
     }
 
     /**

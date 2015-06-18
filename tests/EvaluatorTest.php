@@ -91,6 +91,9 @@ class EvaluatorTest extends \PHPUnit_Framework_TestCase
             [Value::TYPE_CLOSURE,  []],
             [Value::TYPE_CLOSURE,  5.5],
 
+            // Numeric string but no numeric expected type
+            [Value::TYPE_OBJECT, '5.0'],
+
             // Array callable is not of type 'invalid'
             ['invalid', [$this, 'object']],
 
