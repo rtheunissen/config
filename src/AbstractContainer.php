@@ -77,7 +77,7 @@ abstract class AbstractContainer
         $this->types    = $this->getExpectedTypes();
         $this->defaults = $this->getDefaultValues();
 
-        $this->provided = array_merge_recursive($this->defaults, $provided);
+        $this->provided = array_replace_recursive($this->defaults, $provided);
     }
 
     /**
@@ -176,6 +176,11 @@ abstract class AbstractContainer
     {
         $path = func_get_args();
         $key  = implode('.', $path);
+
+        // Allow dot-notation in first parameter.
+        if (count($path) === 1 && strpos($path[0], '.') !== false) {
+            $path = explode('.', $path[0]);
+        }
 
         if ( ! array_key_exists($key, $this->evaluated)) {
 
