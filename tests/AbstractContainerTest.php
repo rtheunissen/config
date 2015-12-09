@@ -246,5 +246,32 @@ class AbstractContainerTest extends \PHPUnit_Framework_TestCase
 
         call_user_func_array([$container, 'get'], $key);
     }
+
+    public function testDotNotation()
+    {
+        MockContainer::$_types = [
+            'foo' => [
+                'bar' => Value::TYPE_INTEGER,
+            ],
+        ];
+
+        MockContainer::$_defaults = [
+            'foo' => [
+                'bar' => 123,
+            ],
+        ];
+
+        $container = MockContainer::make();
+
+        $this->assertEquals(123, $container->get('foo.bar'));
+
+        $container = MockContainer::make([
+            'foo' => [
+                'bar' => 456,
+            ],
+        ]);
+
+        $this->assertEquals(456, $container->get('foo.bar'));
+    }
 }
 
