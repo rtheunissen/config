@@ -2,13 +2,13 @@
 
 namespace Concat\Config\Container;
 
-use Concat\Config\Container\Value;
 use InvalidArgumentException;
+use Serializable;
 
 /**
- * Abstract configration container used to manage a configuration array.
+ * Abstract configuration container used to manage a configuration array.
  */
-abstract class AbstractContainer
+abstract class AbstractContainer implements Serializable
 {
     /**
      * @var mixed[] Provided configuration values.
@@ -16,17 +16,17 @@ abstract class AbstractContainer
     protected $provided;
 
     /**
-     * @var mixed[] Evaluated configration values.
+     * @var mixed[] Evaluated configuration values.
      */
     protected $evaluated = [];
 
     /**
-     * @var array Expected configration value types.
+     * @var array Expected configuration value types.
      */
     private $types;
 
     /**
-     * @var array Default configration values.
+     * @var array Default configuration values.
      */
     private $defaults;
 
@@ -63,6 +63,7 @@ abstract class AbstractContainer
      *     ],
      * ];
      *
+     * @return array
      */
     abstract protected function getDefaultValues();
 
@@ -183,7 +184,6 @@ abstract class AbstractContainer
         }
 
         if ( ! array_key_exists($key, $this->evaluated)) {
-
             $value = $this->findValue($path);
             $types = $this->findTypes($path);
 
@@ -191,5 +191,35 @@ abstract class AbstractContainer
         }
 
         return $this->evaluated[$key];
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @return array
+     */
+    public function serialize()
+    {
+        return serialize([
+            $this->provided,
+            $this->evaluated,
+            $this->types,
+            $this->defaults,
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param array $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+
+        $this->provided = $data[0];
+        $this->evaluated = $data[1];
+        $this->types = $data[2];
+        $this->defaults = $data[3];
     }
 }
