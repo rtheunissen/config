@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.3
+
+_Released: 2015-12-10_
+
+* Support for serialization.
+
 ## 0.0.2
 
 _Released: 2015-12-09_
