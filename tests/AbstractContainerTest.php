@@ -71,7 +71,7 @@ class AbstractContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerTestValidGet
      */
-    public function testValidGet($types, $defaults, $provided, $key=null)
+    public function testValidGet($types, $defaults, $provided, $key = null)
     {
         $key = $key ?: ['a'];
 
@@ -94,7 +94,7 @@ class AbstractContainerTest extends \PHPUnit_Framework_TestCase
             [
                 ['a' => Value::TYPE_ARRAY],
                 [],
-                ['a' => []]
+                ['a' => []],
             ],
 
             // Expected array yields default array
@@ -109,7 +109,7 @@ class AbstractContainerTest extends \PHPUnit_Framework_TestCase
                 ['a' => ['b' => Value::TYPE_ARRAY]],
                 [],
                 ['a' => ['b' => []]],
-                ['a', 'b']
+                ['a', 'b'],
             ],
 
             // Nested expected array yields default array
@@ -125,7 +125,7 @@ class AbstractContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider expectedArrayProvider
      */
-    public function testExpectedArray($types, $defaults, $provided, $key=['a'])
+    public function testExpectedArray($types, $defaults, $provided, $key = ['a'])
     {
         MockContainer::$_types = $types;
         MockContainer::$_defaults = $defaults;
@@ -160,7 +160,7 @@ class AbstractContainerTest extends \PHPUnit_Framework_TestCase
                 ['a' => ['b' => [Value::TYPE_ARRAY, null]]],
                 [],
                 ['a' => ['b' => null]],
-                ['a', 'b']
+                ['a', 'b'],
             ],
 
             // Multi type null yields allowed default nested null
@@ -176,7 +176,7 @@ class AbstractContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider expectedNullProvider
      */
-    public function testExpectedNull($types, $defaults, $provided, $key=['a'])
+    public function testExpectedNull($types, $defaults, $provided, $key = ['a'])
     {
         MockContainer::$_types = $types;
         MockContainer::$_defaults = $defaults;
@@ -235,7 +235,7 @@ class AbstractContainerTest extends \PHPUnit_Framework_TestCase
      * @dataProvider providerTestInvalidGet
      * @expectedException Exception
      */
-    public function testInvalidGet($types, $defaults, $instances, $key=null)
+    public function testInvalidGet($types, $defaults, $instances, $key = null)
     {
         $key = $key ?: ['a'];
 
@@ -273,5 +273,32 @@ class AbstractContainerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(456, $container->get('foo.bar'));
     }
-}
 
+    public function testCanBeSerialised()
+    {
+        MockContainer::$_types = [
+            'foo' => Value::TYPE_INTEGER,
+        ];
+
+        MockContainer::$_defaults = [
+            'foo' => 123,
+        ];
+
+        $container = MockContainer::make([
+            'foo' => 456,
+        ]);
+
+        // Warm up evaluated...
+        $container->get('foo');
+
+        $this->assertEquals(
+            $container,
+            unserialize(serialize($container))
+        );
+
+        $this->assertEquals(
+            serialize($container),
+            serialize(unserialize(serialize($container)))
+        );
+    }
+}
